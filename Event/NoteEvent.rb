@@ -1,12 +1,11 @@
 class Event
   module Note extend self
-    def on(note, octave, dur, velocity)
+    def on(note, octave, velocity)
       Event.new({
         :type => EventType::NOTE,
         :method => EventType::Note::ON,
         :note => note,
         :octave => octave,
-        :dur => dur,
         :velocity => velocity
       })
     end
@@ -15,8 +14,7 @@ class Event
         :type => EventType::NOTE,
         :method => EventType::Note::OFF,
         :note => note,
-        :octave => octave,
-        :dur => 0
+        :octave => octave
       })
     end
     def rest(dur)

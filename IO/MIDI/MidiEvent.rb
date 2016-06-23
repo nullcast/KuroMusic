@@ -7,23 +7,24 @@ class Midi
       end
 
       def note_to_bin()
-        dur = var_len(@args[:dur])
         case @args[:method]
         when Event::EventType::Note::REST
+          dur = var_len(@args[:dur])
           return dur
         when Event::EventType::Note::OFF
           note_num = NOTE[@args[:note]] + @args[:octave] * OCTAVE_UNIT
           return [0x80, note_num, 0]
         when Event::EventType::Note::ON
           note_num = NOTE[@args[:note]] + @args[:octave] * OCTAVE_UNIT
-          return [0, 0x90, note_num, @args[:velocity]] + dur
+          return [0x90, note_num, @args[:velocity]]
         end
       end
 
       def meta_to_bin()
         case @args[:method]
         when Event::EventType::Meta::SET_TEMPO
-          return [0, 0xff, 0x51, 0x03, @args[:tempo] >> 16, @args[:tempo] >> 8, @args[:tempo] % 256]
+          tempo = 60000000 / @args[:tempo]
+          return [0, 0xff, 0x51, 0x03, tempo >> 16, tempo >> 8, tempo % 256]
         end
       end
 

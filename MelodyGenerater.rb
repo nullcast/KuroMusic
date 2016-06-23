@@ -5,7 +5,8 @@ require_relative "Generator/Random"
 require_relative "Generator/Schenker"
 
 class MelodyGenerater
-  def initialize(dtime, scale, key = nil)
+  def initialize(dtime, scale, chord, key = nil)
+    @chord = chord
     @dtime = dtime
     @note_times = [dtime/8, dtime/4, dtime/2, dtime, dtime*2, dtime*4]
     @scale = scale

@@ -16,12 +16,11 @@ class Midi
         midi.tracks.each {|track|
           track.extend(MidiTrack)
           m = track.to_bin
-          p track.events.map {|e|
-            [e.args[:type], e.args[:method], e.args[:note], e.args[:octave], e.args[:dur], e.args[:velocity]]
+          track.each {|e|
+            #[e.args[:type], e.args[:method], e.args[:note], e.args[:octave], e.args[:dur], e.args[:velocity]]
+            p e.args
           }
-          p m
-          #tl = m.size
-          #file.write [0x4d, 0x54, 0x72, 0x6b, tl >> 24, tl >> 16, tl >> 8, tl % 256].pack('C*')
+          #p m
           file.write m.pack('C*')
         }
       end
