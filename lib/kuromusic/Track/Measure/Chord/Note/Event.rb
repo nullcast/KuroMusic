@@ -8,4 +8,9 @@ class Event
     def initialize(args)
       @args = args
     end
+
+  public
+    def inspect()
+      "< " + @args.to_s + " >"
+    end
 end

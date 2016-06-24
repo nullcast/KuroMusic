@@ -4,11 +4,13 @@ DELTA_TIME = 480
 midi = Midi.new(DELTA_TIME, 2)
 melo = MelodyGenerater.new(DELTA_TIME, Scale::MAJOR, []).extend(MelodyGenerater::Schenker)
 
-a_can = melo.cantus(5).unshift(Event::Meta::set_tempo(171))
+a_can = melo.cantus(5)
+a_can[0].set_meta(Event::Meta::set_tempo(171))
 b_can = melo.cantus(5)#.unshift(Event::Meta::set_tempo(140))
 s_can = melo.cantus(10)#.unshift(Event::Meta::set_tempo(190))
 
-a_bas = melo.base(5).unshift(Event::Meta::set_tempo(171))
+a_bas = melo.base(5)
+a_bas[0].set_meta(Event::Meta::set_tempo(171))
 b_bas = melo.base(5)#.unshift(Event::Meta::set_tempo(140))
 s_bas = melo.base(10)#.unshift(Event::Meta::set_tempo(190))
 
