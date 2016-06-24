@@ -20,4 +20,6 @@ midi.tracks[0] = Track.new(
   ]
 )
 
+p midi.tracks[0]
+
 Midi::IO.write("../../hoge3.mid", midi)

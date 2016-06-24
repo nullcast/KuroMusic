@@ -83,4 +83,10 @@ class Track < Object
     end
     Track.new(tmp)
   end
+
+  def inspect()
+    "[
+  " + @measures.map{|m| m.inspect}.join("\n  ----------------------------------------------------------\n  ") + "
+]"
+  end
 end

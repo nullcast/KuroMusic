@@ -9,4 +9,10 @@ class Measure < Object
   def set_meta(meta_event)
     @metas.push(meta_event)
   end
+
+  def inspect()
+    "(
+    " + @chords.map{|m| m.inspect}.join("\n  ),\n  (\n    ") + "
+  )"
+  end
 end

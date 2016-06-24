@@ -17,4 +17,8 @@ class Note < Object
     def get_off_event()
       Event::Note::off(@note, @octave)
     end
+
+    def inspect()
+      "<:note=>" + @note + ", :octave=>" + @octave.to_s + ", :velocity:=>" + @velocity.to_s + ", :duration=>" + @dur.to_s + ">"
+    end
 end

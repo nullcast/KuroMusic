@@ -33,7 +33,7 @@ class Midi
       OCTAVE_UNIT = 12
 
       def to_bin()
-        p self.args
+        #p self.args
         if @args[:type] == ::Event::EventType::NOTE
           return note_to_bin
         elsif @args[:type] == ::Event::EventType::META
