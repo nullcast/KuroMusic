@@ -21,7 +21,7 @@ class MelodyGenerater
       end
 
       def common(length, octave, _note_times, notes)
-        events = []
+        measures = []
         f = fiber(octave, notes, 2)
         length.times {|i|
           note_times = _note_times[0..(_note_times.length - 1)]

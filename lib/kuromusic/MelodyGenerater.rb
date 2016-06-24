@@ -1,5 +1,5 @@
-require_relative "Event"
 require_relative "Track"
+#require_relative "Track/Event"
 
 require_relative "Generator/Random"
 require_relative "Generator/Schenker"

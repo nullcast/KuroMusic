@@ -10,7 +10,7 @@ class Midi
   end
 
   def initialize(dtime, track_num)
-    @tracks = Array.new(track_num, Track.new([]))
+    @tracks = Array.new(track_num, ::Track.new([]))
     @dtime = dtime
   end
 end

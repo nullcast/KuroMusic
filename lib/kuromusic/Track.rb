@@ -1,17 +1,18 @@
 require_relative "Object"
+require_relative "Track/Measure"
 
 class Track < Object
-  def initialize(events = [])
-    @events = events
+  def initialize(measures = [])
+    @measures = measures
   end
 
   def [](index)
-    @events[index]
+    @measures[index]
   end
 
   def []=(index, obj)
-    if obj.class.to_s == "Event"
-      @events[index] = obj
+    if obj.class.to_s == "Measure"
+      @measures[index] = obj
     else
       self.error_puts("ArgumentTypeError", "undefined method `+'")
     end
@@ -19,16 +20,16 @@ class Track < Object
 
   def insert(index, *objs)
     objs.each {|e|
-      if e.class.to_s != "Event"
+      if e.class.to_s != "Measure"
         self.error_puts("ArgumentTypeError", "undefined method `+'")
       end
     }
-    @events.insert(index, *objs)
+    @measures.insert(index, *objs)
   end
 
   def push(obj)
-    if obj.class.to_s == "Event"
-      @events.push(obj)
+    if obj.class.to_s == "Measure"
+      @measures.push(obj)
     else
       self.error_puts("ArgumentTypeError", "undefined method `+'")
     end
@@ -36,8 +37,8 @@ class Track < Object
   end
 
   def unshift(obj)
-    if obj.class.to_s == "Event"
-      @events.unshift(obj)
+    if obj.class.to_s == "Measure"
+      @measures.unshift(obj)
     else
       self.error_puts("ArgumentTypeError", "undefined method `+'")
     end
@@ -45,26 +46,26 @@ class Track < Object
   end
 
   def each()
-    @events.each {|e|
+    @measures.each {|e|
       yield(e)
     }
   end
 
   def each_with_index()
-    @events.each {|e|
+    @measures.each {|e|
       yield(e)
     }
   end
 
   def map()
-    result = @events.map {|e|
+    result = @measures.map {|e|
       yield(e)
     }
     Track.new(result)
   end
 
   def map!()
-    @events.map! {|e|
+    @measures.map! {|e|
       yield(e)
     }
   end
@@ -72,7 +73,7 @@ class Track < Object
   def +(other)
     tmp = []
     if other.class.to_s == "Track"
-      tmp.push(@events)
+      tmp.push(@measures)
       other.each{|e|
         tmp.push(e)
       }
