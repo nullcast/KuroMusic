@@ -1,6 +1,6 @@
 # KuroMusic
 
-KuroMusic is midi controll library writed by ruby.
+KuroMusic is midi controll library written by ruby.
 
 ##version
 0.0.2
