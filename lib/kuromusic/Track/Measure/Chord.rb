@@ -5,7 +5,7 @@ class Chord < Object
     @notes = notes
   end
 
-  def inspect()
-    @notes.map{|n| n.inspect}.join(",\n    ")
+  def inspect(key = nil)
+    @notes.map{|n| n.inspect(key)}.join(",\n    ")
   end
 end

@@ -4,7 +4,7 @@ class Midi
   private
     module Chord
       public
-        def to_bin()
+        def to_bin(key)
           predur = 0
           ons = []
           offs = []
@@ -12,11 +12,11 @@ class Midi
           @notes.sort {|a, b|
             a.dur <=> b.dur
           }.each {|n|
-            ons += [::Event::Note::rest(0), n.get_on_event]
+            ons += [::Event::Note::rest(0), n.get_on_event(key)]
             maxdur = n.dur if maxdur < n.dur
           }.each {|n|
             currentdur = n.dur - predur
-            offs += [::Event::Note::rest(currentdur), n.get_off_event]
+            offs += [::Event::Note::rest(currentdur), n.get_off_event(key)]
             predur = n.dur
           }
           (ons + offs).map {|e|

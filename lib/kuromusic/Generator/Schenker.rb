@@ -11,9 +11,8 @@ class MelodyGenerater
               dur, velocity = Fiber.yield (0..(num-1)).to_a.map{|item|
                 _n = n + (2 * item)
                 octave = octave + _n / 12
-                number = _n % 12
-                note = Scale::number_to_code(number)
-                Note.new(note, octave, velocity, dur)
+                degree = _n % 12
+                Note.new(degree, octave, velocity, dur)
               }
             }
           end
@@ -42,14 +41,8 @@ class MelodyGenerater
       end
 
     public
-      def base(length)
-        octave = 2
-        Track.new(common(length, octave, @note_times[4..5], BACK))
-      end
-
-      def cantus(length)
-        octave = 4
-        Track.new(common(length, octave, @note_times[2..3], MIDDLE))
+      def generate(length, octave)
+        Track.new(@key, common(length, octave, @note_times[2..3], @scale))
       end
     end
 end

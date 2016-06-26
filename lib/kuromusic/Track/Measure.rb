@@ -16,11 +16,11 @@ class Measure < Object
     self
   end
 
-  def inspect()
-    "
-  " + @metas.map{|m| m.inspect}.join("\n  ),\n  (\n    ") + "
+  def inspect(key = nil)
+  "  Measure Meta:
+" + @metas.map{|m| "  " + m.inspect + "\n"}.join() + "
   (
-    " + @chords.map{|m| m.inspect}.join("\n  ),\n  (\n    ") + "
+    " + @chords.map{|m| m.inspect(key)}.join("\n  ),\n  (\n    ") + "
   )"
   end
 end

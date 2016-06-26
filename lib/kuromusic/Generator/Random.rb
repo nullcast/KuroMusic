@@ -33,13 +33,8 @@ class MelodyGenerater
       end
 
     public
-      def base(length)
-        octave = 2
-        Track.new(common(length, octave, @note_times[4..5], @scale))
-      end
-      def cantus(length)
-        octave = 4
-        Track.new(common(length, octave, @note_times[1..3], @scale))
+      def generate(length, octave)
+        Track.new(@key, common(length, octave, @note_times[2..3], @scale))
       end
   end
 end

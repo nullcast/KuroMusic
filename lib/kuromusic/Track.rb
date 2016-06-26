@@ -1,8 +1,10 @@
 require_relative "Object"
+require_relative "Key"
 require_relative "Track/Measure"
 
 class Track < Object
-  def initialize(measures = [])
+  def initialize(key, measures = [])
+    @key = key
     @measures = measures
   end
 
@@ -70,6 +72,10 @@ class Track < Object
     }
   end
 
+  def length()
+    @measure.length
+  end
+
   def +(other)
     tmp = []
     if other.class.to_s == "Track"
@@ -81,12 +87,16 @@ class Track < Object
     else
       self.error_puts("ArgumentTypeError", "undefined method `+'")
     end
-    Track.new(tmp)
+    Track.new(@key, tmp)
   end
 
   def inspect()
     "[
-  " + @measures.map{|m| m.inspect}.join("\n  ----------------------------------------------------------\n  ") + "
+  Track Meta: < key = #{@key} >
+  ----------------------------------------------------------
+  " + @measures.each_with_index.map{|m, i|
+    "Measure #{i+1}:\n" + m.inspect(@key)
+  }.join("\n  ----------------------------------------------------------\n  ") + "
 ]"
   end
 end
