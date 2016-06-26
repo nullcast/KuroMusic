@@ -3,7 +3,7 @@
 KuroMusic is midi controll library written by ruby.
 
 ##version
-0.0.2
+0.0.3
 
 ## Installation
 
@@ -28,22 +28,30 @@ you should require KuroMusic in your source code to use those method.
 require "KuroMusic"
 ```
 
-###generating melody on yourself
+###define DELTA TIME
+
+you should define delta time.
+delta time is imaginary time as quarter note used in MIDI.
 ```ruby:
 DELTA_TIME = 480
+```
+
+###generating melody on yourself
+```ruby:
 midi = Midi.new(DELTA_TIME, 1)
 chords1 = [
-  Chord.new([Note.new("A", 4, 100, 480),Note.new("C", 4, 100, 480),Note.new("E", 4, 100, 480)]),
-  Chord.new([Note.new("B", 4, 100, 480),Note.new("D", 4, 100, 480),Note.new("F", 4, 100, 480)]),
-  Chord.new([Note.new("C", 4, 100, 480),Note.new("E", 4, 100, 480),Note.new("G", 4, 100, 480)]),
-  Chord.new([Note.new("D", 4, 100, 480),Note.new("F", 4, 100, 480),Note.new("A", 4, 100, 480)]),
+  Chord.new([Note.new(-3, 4, 100, 480),Note.new(0, 4, 100, 480),Note.new(4, 4, 100, 480)]),
+  Chord.new([Note.new(-1, 4, 100, 480),Note.new(2, 4, 100, 480),Note.new(5, 4, 100, 480)]),
+  Chord.new([Note.new(0, 4, 100, 480),Note.new(4, 4, 100, 480),Note.new(7, 4, 100, 480)]),
+  Chord.new([Note.new(2, 4, 100, 480),Note.new(5, 4, 100, 480),Note.new(9, 4, 100, 480)]),
 ]
 chords2 = [
-  Chord.new([Note.new("E", 4, 100, 480),Note.new("G", 4, 100, 480),Note.new("B", 4, 100, 480)]),
-  Chord.new([Note.new("F", 4, 100, 480),Note.new("A", 4, 100, 480),Note.new("C", 4, 100, 480)]),
-  Chord.new([Note.new("G", 4, 100, 480),Note.new("B", 4, 100, 480),Note.new("D", 4, 100, 480)]),
+  Chord.new([Note.new(4, 4, 100, 480),Note.new(7, 4, 100, 480),Note.new(11, 4, 100, 480)]),
+  Chord.new([Note.new(5, 4, 100, 480),Note.new(9, 4, 100, 480),Note.new(0, 5, 100, 480)]),
+  Chord.new([Note.new(7, 4, 100, 480),Note.new(11, 4, 100, 480),Note.new(2, 5, 100, 480)]),
 ]
 midi.tracks[0] = Track.new(
+  Key::C::NATURAL,
   [
     Measure.new(chords1),
     Measure.new(chords2)
@@ -55,35 +63,76 @@ midi.tracks[0] = Track.new(
 ```ruby:
 DELTA_TIME = 480
 midi = Midi.new(DELTA_TIME, 2)
-melo = MelodyGenerater.new(DELTA_TIME, Scale::MAJOR).extend(MelodyGenerater::Schenker)
-midi.tracks[0] = melo.cantus(10)
-midi.tracks[1] = melo.base(10)
+melo = MelodyGenerater.new(DELTA_TIME, Key::E::NATURAL, Scale::MAJOR).extend(MelodyGenerater::Schenker)
+midi.tracks[0] = melo.generate(10, 4)
+midi.tracks[1] = melo.generate(10, 2)
 ```
 
 ###changing tempo
 ```ruby:
-can = melo.cantus(10)
-can[0].set_meta(Event::Meta::set_tempo(171))
+can_track = melo.generate(10, 4)
+can_track[0].set_meta(Event::Meta::set_tempo(171))
 ```
 
 ###connecting tracks
 ```ruby:
-a_can = melo.cantus(10)
-b_can = melo.cantus(10)
-midi.tracks[0] = a_can + b_can
-```
-
-###connecting tracks
-```ruby:
-a_can = melo.cantus(10)
-b_can = melo.cantus(10)
-midi.tracks[0] = a_can + b_can
+a_can_track = melo.generate(10, 4)
+b_can_track = melo.generate(10, 4)
+midi.tracks[0] = a_can_track + b_can_track
 ```
 
 ###write midi file
 ```ruby:
-Midi::IO.write("hoge3.mid", midi)
+Midi::IO.write("hoge.mid", midi)
 ```
+
+##reference
+###Note
+Note.new(degree, octave, velocity, duration)
+
+duration is based on delta time.
+
+###Chord
+Chord.new([Notes])
+
+###Measure
+Measure.new([Chords])
+
+###Track
+Track.new(key, [Measures])
+
+###Key
+- Key::C::NATURAL
+- Key::B::SHARP
+- Key::C::SHARP
+- Key::D::FLAT
+- Key::D::NATURAL
+- Key::D::SHARP
+- Key::E::FLAT
+- Key::E::NATURAL
+- Key::F::FLAT
+- Key::E::SHARP
+- Key::F::NATURAL
+- Key::C::FLAT
+- Key::B::NATURAL
+- Key::A::SHARP
+- Key::B::FLAT
+- Key::A::NATURAL
+- Key::A::FLAT
+- Key::G::SHARP
+- Key::G::NATURAL
+- Key::G::FLAT
+- Key::F::SHARP
+
+###Scale
+- Scale::MAJOR
+- Scale::MINOR
+- Scale::PENTATONIC
+- Scale::WHOLE_TONE
+- Scale::OKINAWA
+- Scale::INDIAN
+- Scale::GYPSY
+- Scale::KUMOI
 
 ## Contributing
 
