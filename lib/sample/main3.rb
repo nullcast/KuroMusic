@@ -25,5 +25,5 @@ midi.tracks[0] = a_c_t + b_c_t + c_c_t + a_c_t
 midi.tracks[1] = a_t + a_t + a_t + a_t + b_t + b_t + c_t + c_t + a_t + a_t + a_t + a_t
 midi.tracks[2] = a_b_t + a_b_t + a_b_t + a_b_t  + b_b_t + b_b_t + c_b_t + c_b_t + a_b_t + a_b_t + a_b_t + a_b_t
 
-#p midi.tracks[0]
+p midi.tracks[0]
 Midi::IO.write("../../hoge3.mid", midi)
