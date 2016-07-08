@@ -16,9 +16,10 @@ chords2 = [
 midi.tracks[0] = Track.new(
   Key::C::NATURAL,
   [
-    Measure.new(chords1),
+    Measure.new(chords1).set_meta(Event::Meta::program_change(0, 57)),
     Measure.new(chords2)
-  ]
+  ],
+  0
 )
 
 p midi.tracks[0]

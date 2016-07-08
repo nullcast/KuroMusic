@@ -22,14 +22,14 @@ class Note < Object
       @velocity = velocity
     end
 
-    def get_on_event(key)
+    def get_on_event(channel, key)
       gdeg, goct = get_gdeg_and_goct(key)
-      Event::Note::on(Key::degree_to_key(gdeg), goct, @velocity)
+      Event::Note::on(channel, Key::degree_to_key(gdeg), goct, @velocity)
     end
 
-    def get_off_event(key)
+    def get_off_event(channel, key)
       gdeg, goct = get_gdeg_and_goct(key)
-      Event::Note::off(Key::degree_to_key(gdeg), goct)
+      Event::Note::off(channel, Key::degree_to_key(gdeg), goct)
     end
 
     def inspect(key = nil)

@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Kuromusic::VERSION
   spec.authors       = ["黒澤 預生"]
   spec.email         = ["yonamachan3@gmail.com"]
-  spec.summary       = %q{KuroMusic is midi controll library writed by ruby.}
-  spec.description   = %q{KuroMusic is midi controll library writed by ruby.}
+  spec.summary       = %q{KuroMusic is midi controll library written by ruby.}
+  spec.description   = %q{KuroMusic is midi controll library written by ruby.}
   spec.homepage      = ""
   spec.license       = "MIT"
 

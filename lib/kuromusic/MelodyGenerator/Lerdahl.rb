@@ -1,12 +1,24 @@
-class MelodyGenerater
-  module Rand
+class MelodyGenerator
+  module Schenker
+    MAP = [
+      3, 6, 6, 9, 9, 0, 0
+      3, 9, 6, 9, 9, 0, 0
+      3, 6, 6, 9, 9, 0, 0
+      3, 6, 6, 9, 9, 0, 0
+      3, 6, 6, 9, 9, 0, 0
+    ]
+
     private
       def fiber(octave, notes, num)
         Fiber.new do |dur, velocity|
           while true do
-            dur, velocity = Fiber.yield (0..(num-1)).to_a.map{|item|
-              note = notes.sample
-              Note.new(note, octave, velocity, dur)
+            notes.each{|n|
+              dur, velocity = Fiber.yield (0..(num-1)).to_a.map{|item|
+                _n = n + (2 * item)
+                octave = octave + _n / 12
+                degree = _n % 12
+                Note.new(degree, octave, velocity, dur)
+              }
             }
           end
         end
@@ -23,8 +35,9 @@ class MelodyGenerater
           note_times.reverse.each_with_index {|t, i|
             times = note_times[0..(note_times.length - 1 - i)]
             while _sub >= t do
+              note = @scale.sample
               dur = times.sample
-              chords.push Chord.new(f.resume(dur, 100))
+              chords.push Chord.new([Note.new(note, octave, 100, dur)])
               _sub = _sub - dur
             end
           }
@@ -36,5 +49,5 @@ class MelodyGenerater
       def generate(length, octave)
         Track.new(@key, common(length, octave, @note_times[2..3], @scale))
       end
-  end
+    end
 end

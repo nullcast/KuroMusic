@@ -1,4 +1,4 @@
-class MelodyGenerater
+class MelodyGenerator
   module Schenker
     MIDDLE = [7, 5, 4, 2, 2, 0]
     BACK = [0, 5, 7, 0]

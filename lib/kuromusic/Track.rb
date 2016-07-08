@@ -3,9 +3,10 @@ require_relative "Key"
 require_relative "Track/Measure"
 
 class Track < Object
-  def initialize(key, measures = [])
+  def initialize(key, measures = [], channel = 1)
     @key = key
     @measures = measures
+    @channel = channel
   end
 
   def [](index)
@@ -92,7 +93,7 @@ class Track < Object
 
   def inspect()
     "[
-  Track Meta: < key = #{@key} >
+  Track Meta: < key = #{@key}, channel = #{@channel} >
   ----------------------------------------------------------
   " + @measures.each_with_index.map{|m, i|
     "Measure #{i+1}:\n" + m.inspect(@key)

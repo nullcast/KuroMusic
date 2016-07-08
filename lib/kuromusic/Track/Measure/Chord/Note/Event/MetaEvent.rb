@@ -7,5 +7,13 @@ class Event
         :tempo => bpm
       })
     end
+    def program_change(channel, number)
+      Event.new({
+        :type => EventType::META,
+        :method => EventType::Meta::PROGRAM_CHANGE,
+        :channel => channel,
+        :number => number
+      })
+    end
   end
 end

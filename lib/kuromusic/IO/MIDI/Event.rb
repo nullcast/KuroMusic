@@ -25,6 +25,8 @@ class Midi
         when ::Event::EventType::Meta::SET_TEMPO
           tempo = 60000000 / @args[:tempo]
           return [0, 0xff, 0x51, 0x03, tempo >> 16, tempo >> 8, tempo % 256]
+        when ::Event::EventType::Meta::PROGRAM_CHANGE
+          return [0, 0xC0 + @args[:channel], 0x00 + @args[:number]]
         end
       end
 
