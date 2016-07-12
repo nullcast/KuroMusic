@@ -21,7 +21,7 @@ class Midi
           }
           (ons + offs).map {|e|
             e.extend(Midi::Event)
-            e.to_bin
+            e.to_bin(channel)
           }.flatten!
         end
     end

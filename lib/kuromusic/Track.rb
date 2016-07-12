@@ -88,7 +88,7 @@ class Track < Object
     else
       self.error_puts("ArgumentTypeError", "undefined method `+'")
     end
-    Track.new(@key, tmp)
+    Track.new(@key, tmp, @channel)
   end
 
   def inspect()

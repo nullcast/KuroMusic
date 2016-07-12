@@ -2,10 +2,40 @@ require_relative "MIDI/Track"
 
 class Midi
   module IO
+    private
+    def self.midi_head(bin)
+      bin.seek(10)
+      track_num = bin.read(2).unpack('C*').reverse.each.with_index.inject(0) do |track_num, (value,index)|
+        track_num = track_num + (value << 8 * index)
+      end
+      dtime = bin.read(2).unpack('C*').reverse.each.with_index.inject(0) do |track_num, (value,index)|
+        track_num = track_num + (value << 8 * index)
+      end
+      return track_num, dtime
+    end
+    def self.track_head(bin)
+      bin.seek(10)
+      track_num = bin.read(2).unpack('C*').reverse.each.with_index.inject(0) do |track_num, (value,index)|
+        track_num = track_num + (value << 8 * index)
+      end
+      dtime = bin.read(2).unpack('C*').reverse.each.with_index.inject(0) do |track_num, (value,index)|
+        track_num = track_num + (value << 8 * index)
+      end
+      return track_num, dtime
+    end
     public
-    def self.load(input_path)
-      tempo = 120
-      Midi.new(tempo)
+    def self.read(input_path)
+      File.open(input_path, "rb") do |bin|
+        track_num, dtime = IO::midi_head(bin)
+        puts track_num
+        puts dtime
+        track_num.times do |i|
+          #track_num, dtime = IO::track_head(bin)
+        end
+        #while rec = bin.read(1)
+        #  puts rec
+        #end
+      end
     end
     def self.write(output_path, midi)
       File.open(output_path, "wb") do |file|

@@ -7,7 +7,7 @@ class Midi
       def to_bin(key, channel)
         @metas.map {|m|
           m.extend(Midi::Event)
-          m.to_bin
+          m.to_bin(channel)
         }.flatten.concat @chords.map {|c|
           c.extend(Midi::Chord)
           c.to_bin(key, channel)

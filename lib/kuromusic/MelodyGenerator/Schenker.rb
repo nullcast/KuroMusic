@@ -4,15 +4,15 @@ class MelodyGenerator
     BACK = [0, 5, 7, 0]
 
     private
-      def fiber(octave, notes, num)
-        Fiber.new do |dur, velocity|
+      def fiber(octave, num)
+        Fiber.new do |notes, dur, velocity|
           while true do
             notes.each{|n|
-              dur, velocity = Fiber.yield (0..(num-1)).to_a.map{|item|
+              notes, dur, velocity = Fiber.yield (0..(num-1)).to_a.map{|item|
                 _n = n + (2 * item)
-                octave = octave + _n / 12
-                degree = _n % 12
-                Note.new(degree, octave, velocity, dur)
+                octave_ = octave + _n / 12
+                degree_ = _n % 12
+                Note.new(degree_, octave_, velocity, dur)
               }
             }
           end
@@ -20,29 +20,24 @@ class MelodyGenerator
       end
 
       def common(length, octave, _note_times, notes)
-        f = fiber(octave, notes, 2)
+        f = fiber(octave, 2)
         (1..length).map {|i|
           chords = []
           note_times = _note_times[0..(_note_times.length - 1)]
-          dur = note_times.sample
-          chords.push Chord.new(f.resume(dur, 100))
-          _sub = @measure - dur
-          note_times.reverse.each_with_index {|t, i|
-            times = note_times[0..(note_times.length - 1 - i)]
-            while _sub >= t do
-              note = @scale.sample
-              dur = times.sample
-              chords.push Chord.new([Note.new(note, octave, 100, dur)])
-              _sub = _sub - dur
-            end
-          }
+          @rhythm.each_with_index do |dur, index|
+            #if(index % 2 == 0)
+              chords.push ::Chord.new(f.resume(notes, dur, 100))
+            #else
+            #  chords.push ::Chord.new(f.resume(@scale, dur, 100))
+            #end
+          end
           Measure.new(chords)
         }
       end
 
     public
       def generate(length, octave)
-        Track.new(@key, common(length, octave, @note_times[2..3], @scale))
+        Track.new(@key, common(length, octave, @note_times[2..3], MIDDLE))
       end
     end
 end
