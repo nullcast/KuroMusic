@@ -2,7 +2,7 @@
 
 KuroMusic is midi controll library written by ruby.
 
-##version
+## version
 0.1.0
 
 ## Installation
@@ -28,7 +28,7 @@ you should require KuroMusic in your source code to use those method.
 require "KuroMusic"
 ```
 
-###define DELTA TIME
+### define DELTA TIME
 
 you should define delta time.
 delta time is imaginary time as quarter note used in MIDI.
@@ -36,7 +36,7 @@ delta time is imaginary time as quarter note used in MIDI.
 DELTA_TIME = 480
 ```
 
-###generating melody on yourself
+### generating melody on yourself
 ```ruby:
 midi = Midi.new(DELTA_TIME, 1)
 chords1 = [
@@ -59,7 +59,7 @@ midi.tracks[0] = Track.new(
 )
 ```
 
-###generating melody automaticaly
+### generating melody automaticaly
 ```ruby:
 DELTA_TIME = 480
 midi = Midi.new(DELTA_TIME, 2)
@@ -68,40 +68,40 @@ midi.tracks[0] = melo.generate(10, 4)
 midi.tracks[1] = melo.generate(10, 2)
 ```
 
-###changing tempo
+### changing tempo
 ```ruby:
 can_track = melo.generate(10, 4)
 can_track[0].set_meta(Event::Meta::set_tempo(171))
 ```
 
-###connecting tracks
+### connecting tracks
 ```ruby:
 a_can_track = melo.generate(10, 4)
 b_can_track = melo.generate(10, 4)
 midi.tracks[0] = a_can_track + b_can_track
 ```
 
-###write midi file
+### write midi file
 ```ruby:
 Midi::IO.write("hoge.mid", midi)
 ```
 
-##reference
-###Note
+## reference
+### Note
 Note.new(degree, octave, velocity, duration)
 
 duration is based on delta time.
 
-###Chord
+### Chord
 Chord.new([Notes])
 
-###Measure
+### Measure
 Measure.new([Chords])
 
-###Track
+### Track
 Track.new(key, [Measures])
 
-###Key
+### Key
 - Key::C::NATURAL
 - Key::B::SHARP
 - Key::C::SHARP
@@ -124,7 +124,7 @@ Track.new(key, [Measures])
 - Key::G::FLAT
 - Key::F::SHARP
 
-###Scale
+### Scale
 - Scale::MAJOR
 - Scale::MINOR
 - Scale::PENTATONIC
